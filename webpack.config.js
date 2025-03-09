@@ -1,8 +1,23 @@
 const path = require('path');
+const BundleAnalyzerPlugin =
+    require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = (env) => {
+    const basePlugins = [
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css'
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Webpack App',
+            filename: 'index.html',
+            template: './src/template.html'
+        })
+    ];
     const isDevelopment = process.env.NODE_ENV === 'development';
+    const plugins = isDevelopment
+        ? basePlugins
+        : [...basePlugins, new BundleAnalyzerPlugin()];
     return {
         mode: isDevelopment ? 'development' : 'production',
         entry: {
@@ -12,7 +27,7 @@ module.exports = (env) => {
             path: path.resolve(__dirname, 'dist'),
             filename: '[name].[contenthash].js',
             clean: true,
-            assetModuleFilename: '[file]'
+            assetModuleFilename: '[base]'
         },
         devtool: isDevelopment ? 'source-map' : false,
         module: {
@@ -50,21 +65,12 @@ module.exports = (env) => {
                 }
             ]
         },
-        plugins: [
-            new MiniCssExtractPlugin({
-                filename: '[name].[contenthash].css'
-            }),
-            new HtmlWebpackPlugin({
-                title: 'Webpack App',
-                filename: 'index.html',
-                template: './src/template.html'
-            })
-        ],
+        plugins,
         devServer: {
             static: {
                 directory: 'dist' // Đường dẫn tương đối đến với thư mục chứa index.html
             },
-            port: 3002, // Port thay cho port mặc định (8080)
+            port: 3001, // Port thay cho port mặc định (8080)
             open: true, // Mở trang webpack khi chạy terminal
             hot: true, // Bật tính năng reload nhanh Hot Module Replacement
             compress: true, // Bật Gzip cho các tài nguyên
