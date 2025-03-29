@@ -1,21 +1,56 @@
-import logo from './logo.svg'
-import './App.css'
+import './App.css';
+import Clock from './Clock';
+import BareInput from './BareInput';
+import Layout from './Layout';
+import BareButton from './BareButton';
+import LoginControl from './LoginControl';
+import CorrectlyState from './CorrectlyState';
+import ProductList from './Products/ProductList';
+import Form from './Form/form';
+import UncontrolledComponent from './Form/UncontrolledComponent';
+import Calculator from './Calculator/Calculator';
+import Composition from './Composition&Inheritance/Composition';
+import FilterableProductTable from './ThinkingInReact/FilterableProductTable';
+import FunctionalComponent from './Hook/FunctionalComponent.jsx';
+import { useState } from 'react';
+// import './App.scss';
 
 function App() {
+    const [visible, setVisible] = useState(true);
     return (
         <div className='App'>
-            <h1>Create by HoaiPhuong</h1>
-            <header className='App-header'>
-                <img src={logo} className='App-logo' alt='logo' />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a className='App-link' href='https://reactjs.org' target='_blank' rel='noopener noreferrer'>
-                    Learn React
-                </a>
-            </header>
+            {/* <button
+                onClick={() => {
+                    setVisible(false);
+                }}
+            >
+                Hide Clock component
+            </button>
+            {visible && <Clock />} */}
+            {/* <Layout>
+                <h1>Hello Phuong</h1>
+            </Layout>
+            <BareInput
+                value='100'
+                autoFocus
+                className='input-text'
+                onChange={() => {}}
+            /> */}
+            {/* <BareButton /> */}
+            {/* <LoginControl isLoggedIn={true} /> */}
+            {/* <CorrectlyState /> */}
+            {/* <ProductList /> */}
+            {/* <Form /> */}
+            {/* <UncontrolledComponent /> */}
+            {/* <Calculator /> */}
+            {/* <Composition /> */}
+            {/* <FilterableProductTable /> */}
+            {visible && <FunctionalComponent />}
+            <button onClick={() => setVisible((prevState) => !prevState)}>
+                Change Visible
+            </button>
         </div>
-    )
+    );
 }
 
-export default App
+export default App;
