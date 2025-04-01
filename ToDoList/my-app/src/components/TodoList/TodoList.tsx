@@ -6,7 +6,7 @@ import { ToDo } from '../../@types/todo.type'
 import { useState } from 'react'
 export default function TodoList() {
   const [toDos, setToDos] = useState<ToDo[]>([])
-
+  const [currentToDo, setCurrentToDo] = useState<ToDo | null>(null)
   const addToDo = (name: string) => {
     const newToDo: ToDo = {
       name,
@@ -27,12 +27,38 @@ export default function TodoList() {
       })
     )
   }
+  const startToDo = (id: string) => {
+    const findedToDo = toDos.find((todo) => todo.id === id)
+    if (findedToDo) {
+      setCurrentToDo(findedToDo)
+    }
+  }
+  const editToDo = (name: string) => {
+    setCurrentToDo((prevState) => {
+      if (prevState) return { ...prevState, name }
+      return null
+    })
+  }
+  const finishEditToDo = () => {
+    setToDos((prevState) =>
+      prevState.map((todo) => {
+        if (todo.id === (currentToDo as ToDo).id) {
+          return currentToDo as ToDo
+        }
+        //if (todo.id === currentToDo?.id){
+        // return currentToDo;
+        //}
+        return todo
+      })
+    )
+    setCurrentToDo(null)
+  }
   return (
     <div className={styles.toDoList}>
       <div className={styles.container}>
-        <TaskInput addToDo={addToDo} />
-        <TaskList todos={notYetTask} handleToDo={handleToDo} />
-        <TaskList doneTaskList todos={alreadyDoneTask} handleToDo={handleToDo} />
+        <TaskInput addToDo={addToDo} currentToDo={currentToDo} editToDo={editToDo} finishEditToDo={finishEditToDo} />
+        <TaskList todos={notYetTask} handleToDo={handleToDo} startToDo={startToDo} />
+        <TaskList doneTaskList todos={alreadyDoneTask} handleToDo={handleToDo} startToDo={startToDo} />
       </div>
     </div>
   )

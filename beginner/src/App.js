@@ -14,6 +14,10 @@ import FilterableProductTable from './ThinkingInReact/FilterableProductTable';
 import FunctionalComponent from './Hook/FunctionalComponent.jsx';
 import { useState } from 'react';
 // import './App.scss';
+import AutoBatching from './Batching/AutoBatching';
+import RulesofHook from './Batching/RulesofHook.jsx';
+import Navigation from './CustomHook/Navigation.jsx';
+import Cart from './CustomHook/Cart.jsx';
 
 function App() {
     const [visible, setVisible] = useState(true);
@@ -45,10 +49,14 @@ function App() {
             {/* <Calculator /> */}
             {/* <Composition /> */}
             {/* <FilterableProductTable /> */}
-            {visible && <FunctionalComponent />}
-            <button onClick={() => setVisible((prevState) => !prevState)}>
+            {/* {visible && <FunctionalComponent />} */}
+            {/* <button onClick={() => setVisible((prevState) => !prevState)}>
                 Change Visible
-            </button>
+            </button> */}
+            {/* <AutoBatching /> */}
+            {/* <RulesofHook /> */}
+            <Cart />
+            <Navigation />
         </div>
     );
 }
