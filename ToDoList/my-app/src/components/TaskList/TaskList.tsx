@@ -1,4 +1,5 @@
 import { ToDo } from '../../@types/todo.type';
+import connect from '../HigherOrderComponent/connect';
 import styles from './taskList.module.scss';
 
 interface TaskListProps {
@@ -8,12 +9,15 @@ interface TaskListProps {
     startToDo: (id: string) => void;
     deleteToDo: (id: string) => void;
 }
-export default function TaskList(props: TaskListProps) {
+
+function TaskList(props: TaskListProps & typeof injectedProps) {
     const { doneTaskList, todos, handleToDo, startToDo, deleteToDo } = props;
+
     const onChangeCheckbox =
         (idToDo: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
             handleToDo(idToDo, event.target.checked);
         };
+
     return (
         <div className='mb-2'>
             <h2 className={styles.title}>
@@ -29,8 +33,7 @@ export default function TaskList(props: TaskListProps) {
                             onChange={onChangeCheckbox(todo.id)}
                         />
                         <span
-                            className={`${styles.taskName}
-                    ${todo.done ? styles.taskNameDone : ''}`}
+                            className={`${styles.taskName} ${todo.done ? styles.taskNameDone : ''}`}
                         >
                             {todo.name}
                         </span>
@@ -54,3 +57,7 @@ export default function TaskList(props: TaskListProps) {
         </div>
     );
 }
+
+const injectedProps = { user: { name: 'Tran Hoai Phuong', age: 21 } };
+
+export default connect(injectedProps)(TaskList);

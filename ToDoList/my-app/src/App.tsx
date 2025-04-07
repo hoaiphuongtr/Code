@@ -1,11 +1,10 @@
-import TodoList from './components/TodoList'
+import Watch from './components/Watch';
+import Count from './Count';
 
-function App() {
-  return (
-    <div>
-      <TodoList />
-    </div>
-  )
+export default function App() {
+    return (
+        <div>
+            <Count />
+        </div>
+    );
 }
-
-export default App
